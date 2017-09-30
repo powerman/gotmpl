@@ -66,7 +66,10 @@ func tmpl(tmpl io.Reader, text io.Writer) error {
 	if err != nil {
 		return err
 	}
-	t, err := template.New("main").Funcs(funcMap).Parse(string(buf))
+	t, err := template.New("main").
+		Option("missingkey=zero").
+		Funcs(funcMap).
+		Parse(string(buf))
 	if err != nil {
 		return err
 	}

@@ -23,3 +23,21 @@ func TestTMPL(t *testing.T) {
 		t.Errorf(" = %v, want %v", res, exp)
 	}
 }
+
+func TestOption(t *testing.T) {
+	delete(data.Env, "a")
+	var (
+		template = "…{{ .Env.a }}…"
+		exp      = `……`
+		b        bytes.Buffer
+	)
+
+	err := tmpl(strings.NewReader(template), &b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	res := b.String()
+	if res != exp {
+		t.Errorf(" = %v, want %v", res, exp)
+	}
+}
