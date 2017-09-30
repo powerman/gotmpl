@@ -1,0 +1,34 @@
+defaults: &defaults
+        working_directory: /go/src/github.com/powerman/gotmpl
+        docker:
+            - image: cpdpro/baseimage:build-golang
+
+version: 2
+jobs:
+    test:
+        <<: *defaults
+        steps:
+            - checkout
+            - run: ./test
+    release:
+        <<: *defaults
+        steps:
+            - checkout
+            - run: go get github.com/tcnksm/ghr
+            - run: ./release
+workflows:
+    version: 2
+    test_and_release:
+        jobs:
+            - test:
+                filters:
+                    tags:
+                        only: /v.*/
+            - release:
+                requires:
+                    - test
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^v.*/
