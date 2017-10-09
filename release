@@ -9,10 +9,18 @@ fi
 
 mkdir -p bin
 
-CGO_ENABLED=0 go get -v -installsuffix static
-CGO_ENABLED=0 go build -v -installsuffix static \
-	-ldflags "-X 'main.ver=$TAG'" \
-	-o bin/${PWD##*/}-`uname -s`-`uname -m`
+export CGO_ENABLED=0
+go get -v -installsuffix static
+for os in Linux Darwin Windows; do
+	test $os = Windows && ext=.exe || ext=
+	export GOOS=$(echo $os | tr A-Z a-z)
+	for arch in amd64 386; do
+		 export GOARCH=$arch
+		 go build -v -installsuffix static \
+			-ldflags "-X 'main.ver=$TAG'" \
+			-o bin/${PWD##*/}-${os}-${arch/amd/x64_}$ext
+	done
+done
 
 GH="${PWD##*/github.com/}"
 ghr -u "${GH%%/*}" -r "${GH##*/}" -replace "$TAG" bin
