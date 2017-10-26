@@ -18,7 +18,7 @@ for os in Linux Darwin Windows; do
 		 export GOARCH=$arch
 		 go build -v -installsuffix static \
 			-ldflags "-X 'main.ver=$TAG'" \
-			-o bin/${PWD##*/}-${os}-${arch/amd/x64_}$ext
+			-o bin/${PWD##*/}-${os}-${arch/amd/x86_}$ext
 	done
 done
 
