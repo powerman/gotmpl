@@ -14,8 +14,8 @@ go get github.com/powerman/gotmpl
 Or use static binary:
 
 ```sh
-wget -q -O /usr/local/bin/gotmpl \
-    https://github.com/powerman/gotmpl/releases/download/v1.1.0/gotmpl-`uname -s`-`uname -m`
+curl -s -L -o /usr/local/bin/gotmpl \
+    https://github.com/powerman/gotmpl/releases/download/v1.1.1/gotmpl-`uname -s`-`uname -m`
 chmod +x /usr/local/bin/gotmpl
 ```
 
