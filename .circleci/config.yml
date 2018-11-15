@@ -54,12 +54,15 @@ jobs:
 workflows:
     test-and-release:
         jobs:
-            - test
+            - test:
+                filters:
+                    tags:
+                        only: /v.*/
             - release:
                 requires:
                     - test
                 filters:
-                    branches:
-                        ignore: /.*/
                     tags:
                         only: /v.*/
+                    branches:
+                        ignore: /.*/
