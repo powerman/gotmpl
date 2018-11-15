@@ -52,20 +52,14 @@ jobs:
             - run: ./release
 
 workflows:
-    test:
+    test-and-release:
         jobs:
-            - test:
-                filters:
-                    tags:
-                        ignore: /v.*/
-    test_and_release:
-        jobs:
-            - test:
+            - test
+            - release:
+                requires:
+                    - test
                 filters:
                     branches:
                         ignore: /.*/
                     tags:
                         only: /v.*/
-            - release:
-                requires:
-                    - test
